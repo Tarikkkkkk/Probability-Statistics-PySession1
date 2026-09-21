@@ -182,20 +182,9 @@ def question1_population_comparison(population=10000, prevalence=0.01, sensitivi
             (f'spec {s["specificity"]:.3g}', "specificity"),
         ]
 
-        title = "     ".join(
-            (
-                "$\\bf{" + text.replace(" ", "\\ ") + "}$"
-                if name == changed
-                else text
-            )
-            for text, name in parts
-        )
+        title = "     ".join(text for text, name in parts)
 
-        prefix = (
-            "base scenario:   "
-            if not changed
-            else f"{changed} + {step:g}:   "
-        )
+        prefix = ("base scenario:   " if not changed else f"{changed} + {step:g}:   ")
 
         ax.set_title(prefix + title, fontsize=12, loc="left")
 
