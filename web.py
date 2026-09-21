@@ -96,13 +96,39 @@ metric_col2.metric("Sensitivity", f"{sensitivity:.2f}")
 metric_col3.metric("Specificity", f"{specificity:.2f}")
 metric_col4.metric("P(I | +)", f"{base_posterior:.4f}")
 
-tab1, tab2, tab3 = st.tabs(
+tab0, tab1, tab2, tab3 = st.tabs(
     [
+        "Cell 0 · Question",
         "Cell 1 · Single positive test",
         "Cell 2 · Parameter sensitivity",
         "Cell 3 · Repeated tests",
     ]
 )
+
+with tab0:
+    st.subheader("Question 1")
+
+    st.markdown(
+r"""
+A disease has prevalence $P(I)=0.01$, and a test for this disease has sensitivity
+$P(+\mid I)=0.80$ and specificity $P(-\mid I^c)=0.95$, where $I$ is the event that a randomly
+chosen person is infected and $+$ the event that the test is positive.
+
+**(a)** Find the probability that a person who tests positive is infected, $P(I\mid +)$.
+
+**(b)** Find $P(I\mid +)$ when we increase
+
+(i) the prevalence to 0.05;  
+(ii) the sensitivity to 0.84;  
+(iii) the specificity to 0.99.
+
+Assume the other two values are kept as in (a). **[cell 1]**
+
+**(c)** Find the maximum $P(I\mid +)$ when only the sensitivity can change. **[cell 2]**
+
+**(d)** Find $P(I\mid +,+)$ for two tests independent given infection status. **[cell 3]**
+"""
+    )
 
 with tab1:
     st.subheader("Cell 1 — Single positive test")
@@ -203,24 +229,36 @@ with tab3:
 st.divider()
 st.header("Question 2 — Playlist experiment")
 
-st.markdown(
-    """
-Compare two ways of playing songs:
-
-- **Player A:** each song is selected independently from the whole playlist, so songs can repeat.
-- **Player B:** the playlist is placed in a random order and each song is played once.
-
-For both players, **X** counts artist songs among the first *n* songs, while **Y**
-is the position at which the *r*-th artist song is played.
-"""
-)
-
-q2_tab1, q2_tab2 = st.tabs(
+q2_tab0, q2_tab1, q2_tab2 = st.tabs(
     [
+        "Cell 0 · Question",
         "Cell 4 · Player A vs Player B",
         "Cell 5 · Increasing playlist size",
     ]
 )
+
+with q2_tab0:
+    st.subheader("Question 2")
+
+    st.markdown(
+r"""
+A playlist contains $N=20$ songs, $K=4$ by one artist. Player A selects each song
+independently at random from the whole playlist; songs can repeat. Player B plays the
+songs in a random order; each song only once. Let $X$ count the number of songs by the
+artist among the first 10 songs played, and $Y$ the number of songs played up to and
+including the second song by the artist. Answer for both players.
+
+**(a)** Calculate $E[X]$, $\mathrm{Var}(X)$ and $E[Y]$.
+
+**(b)** Find $P(X\geq2)$ and $P(Y\leq10)$. **[cell 4]**
+
+**(c)** Identify the runs with $X\geq2$ and those with $Y\leq10$. **[cell 4]**
+
+**(d)** Compare $P(X=0)$, $P(X\geq4)$ and $P(Y>15)$. Explain in one sentence. **[cell 4]**
+
+**(e)** Compare the distributions of $X$ for $N=40,200,2000$, with $K/N=0.2$. **[cell 5]**
+"""
+    )
 
 with q2_tab1:
     st.subheader("Cell 4 — Sampling with and without replacement")
@@ -363,23 +401,6 @@ with q2_tab2:
 st.divider()
 st.header("Question 3 — Course registration")
 
-st.markdown(
-    r"""
-A course has a fixed number of seats. Registration requests arrive according
-to a Poisson model with rate **λ requests per second**.
-
-- **R(t)** is the number of requests received by time *t*.
-- **T(r)** is the time of the *r*-th request.
-- The course becomes full at **T(seats)**.
-
-A seat is still open at time *t* exactly when:
-"""
-)
-
-st.latex(
-    r"R(t) < \mathrm{seats} \quad \Longleftrightarrow \quad T(\mathrm{seats}) > t"
-)
-
 q3m1, q3m2, q3m3, q3m4 = st.columns(4)
 
 q3m1.metric("Rate λ", f"{rate:.1f} / s")
@@ -390,13 +411,34 @@ q3m4.metric(f"E[T({int(seats)})]", f"{int(seats) / rate:.2f} s")
 result_6 = question3_registration(rate=rate, seats=int(seats), 
                                   time_cutoff=time_cutoff, seed=int(q3_seed))
 
-q3_tab1, q3_tab2, q3_tab3 = st.tabs(
+q3_tab0, q3_tab1, q3_tab2, q3_tab3 = st.tabs(
     [
+        "Cell 0 · Question",
         "Simulated openings",
         "Distribution and seat-open probability",
         "Numerical results",
     ]
 )
+
+with q3_tab0:
+    st.subheader("Question 3")
+
+    st.markdown(
+r"""
+A course has 60 seats. After registration opens, requests arrive following a Poisson
+model at rate 2 per second. Let $R(t)$ be the number of requests in the first $t$ seconds
+and $T(r)$ be the time of the $r$-th request. The course fills at $T(60)$.
+
+**(a)** Find $P(R(1)=0)$, $E[T(1)]$ and $E[T(60)]$.
+
+**(b)** Express “a seat is still open at time $t$” using $R(t)$, and using $T(60)$.
+
+**(c)** Find the mean and standard deviation of $T(60)$ from 10 000 simulated openings.
+Compare with (a). **[cell 6]**
+
+**(d)** Find the probability that a seat is still open at 20, 30 and 40 seconds. **[cell 6]**
+"""
+    )
 
 with q3_tab1:
     st.subheader("Example simulated registration openings")
