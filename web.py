@@ -41,52 +41,60 @@ st.caption(f"Guided Practice 1 · {selected_question}")
 def render_question_1():
     with st.sidebar:
         st.header("Question 1 parameters")
+        st.caption("Change one or more values, then click Apply.")
 
-        population = st.number_input(
-            "Population",
-            min_value=100,
-            max_value=1_000_000,
-            value=10_000,
-            step=100,
-            key="q1_population",
-        )
+        with st.form("q1_parameters_form", border=False):
+            population = st.number_input(
+                "Population",
+                min_value=100,
+                max_value=1_000_000,
+                value=10_000,
+                step=100,
+                key="q1_population",
+            )
 
-        prevalence = st.slider(
-            "Prevalence  P(I)",
-            min_value=0.001,
-            max_value=0.100,
-            value=0.010,
-            step=0.001,
-            format="%.3f",
-            key="q1_prevalence",
-        )
+            prevalence = st.slider(
+                "Prevalence  P(I)",
+                min_value=0.001,
+                max_value=0.100,
+                value=0.010,
+                step=0.001,
+                format="%.3f",
+                key="q1_prevalence",
+            )
 
-        sensitivity = st.slider(
-            "Sensitivity  P(+ | I)",
-            min_value=0.00,
-            max_value=1.00,
-            value=0.80,
-            step=0.01,
-            key="q1_sensitivity",
-        )
+            sensitivity = st.slider(
+                "Sensitivity  P(+ | I)",
+                min_value=0.00,
+                max_value=1.00,
+                value=0.80,
+                step=0.01,
+                key="q1_sensitivity",
+            )
 
-        specificity = st.slider(
-            "Specificity  P(− | Iᶜ)",
-            min_value=0.00,
-            max_value=1.00,
-            value=0.95,
-            step=0.01,
-            key="q1_specificity",
-        )
+            specificity = st.slider(
+                "Specificity  P(− | Iᶜ)",
+                min_value=0.00,
+                max_value=1.00,
+                value=0.95,
+                step=0.01,
+                key="q1_specificity",
+            )
 
-        step = st.slider(
-            "Increase used in Cells 1–2",
-            min_value=0.01,
-            max_value=0.20,
-            value=0.04,
-            step=0.01,
-            key="q1_step",
-        )
+            step = st.slider(
+                "Increase used in Cells 1–2",
+                min_value=0.01,
+                max_value=0.20,
+                value=0.04,
+                step=0.01,
+                key="q1_step",
+            )
+
+            st.form_submit_button(
+                "Apply",
+                type="primary",
+                use_container_width=True,
+            )
 
     st.header("Question 1 — Diagnostic testing")
 
@@ -231,74 +239,93 @@ def render_question_2():
     with st.sidebar:
         st.divider()
         st.header("Question 2 parameters")
+        st.caption("Change one or more values, then click Apply.")
 
-        songs = st.slider(
-            "Playlist size  N",
-            min_value=5,
-            max_value=100,
-            value=20,
-            step=1,
-            key="q2_songs",
-        )
+        with st.form("q2_parameters_form", border=False):
+            songs = st.slider(
+                "Playlist size  N",
+                min_value=5,
+                max_value=100,
+                value=20,
+                step=1,
+                key="q2_songs",
+            )
 
-        by_artist = st.slider(
-            "Songs by the artist  K",
-            min_value=1,
-            max_value=songs,
-            value=min(4, songs),
-            step=1,
-            key="q2_by_artist",
-        )
+            by_artist = st.slider(
+                "Songs by the artist  K",
+                min_value=1,
+                max_value=100,
+                value=min(4, songs),
+                step=1,
+                key="q2_by_artist",
+            )
 
-        played = st.slider(
-            "Songs counted for X  n",
-            min_value=1,
-            max_value=songs,
-            value=min(10, songs),
-            step=1,
-            key="q2_played",
-        )
+            played = st.slider(
+                "Songs counted for X  n",
+                min_value=1,
+                max_value=100,
+                value=min(10, songs),
+                step=1,
+                key="q2_played",
+            )
 
-        target = st.slider(
-            "Target artist song for Y  r",
-            min_value=1,
-            max_value=by_artist,
-            value=min(2, by_artist),
-            step=1,
-            key="q2_target",
-        )
+            target = st.slider(
+                "Target artist song for Y  r",
+                min_value=1,
+                max_value=100,
+                value=min(2, by_artist),
+                step=1,
+                key="q2_target",
+            )
 
-        runs = st.select_slider(
-            "Simulation runs",
-            options=[10, 100, 10_000],
-            value=10_000,
-            key="q2_runs",
-        )
+            runs = st.select_slider(
+                "Simulation runs",
+                options=[10, 100, 10_000],
+                value=10_000,
+                key="q2_runs",
+            )
 
-        seed = st.number_input(
-            "Random seed",
-            min_value=0,
-            value=2029,
-            step=1,
-            key="q2_seed",
-        )
+            seed = st.number_input(
+                "Random seed",
+                min_value=0,
+                value=2029,
+                step=1,
+                key="q2_seed",
+            )
 
-        st.markdown("##### Cell 5")
-        sizes_text = st.text_input(
-            "Playlist sizes",
-            value="20, 40, 200, 2000",
-            help="Comma-separated playlist sizes for the Cell 5 comparison.",
-            key="q2_sizes_text",
-        )
+            st.markdown("##### Cell 5")
+            sizes_text = st.text_input(
+                "Playlist sizes",
+                value="20, 40, 200, 2000",
+                help="Comma-separated playlist sizes for the Cell 5 comparison.",
+                key="q2_sizes_text",
+            )
 
-        fraction_by_artist = st.slider(
-            "Artist fraction  K/N",
-            min_value=0.05,
-            max_value=0.50,
-            value=0.20,
-            step=0.05,
-            key="q2_fraction_by_artist",
-        )
+            fraction_by_artist = st.slider(
+                "Artist fraction  K/N",
+                min_value=0.05,
+                max_value=0.50,
+                value=0.20,
+                step=0.05,
+                key="q2_fraction_by_artist",
+            )
+
+            st.form_submit_button(
+                "Apply",
+                type="primary",
+                use_container_width=True,
+            )
+
+    # Validate relationships only after the batch of form values reaches Python.
+    if by_artist > songs:
+        st.error("Songs by the artist K cannot exceed playlist size N.")
+        return
+    if played > songs:
+        st.error("Songs counted for X (n) cannot exceed playlist size N.")
+        return
+    if target > by_artist:
+        st.error("Target artist song r cannot exceed K.")
+        return
 
     st.divider()
     st.header("Question 2 — Playlist experiment")
@@ -463,41 +490,49 @@ def render_question_3():
     with st.sidebar:
         st.divider()
         st.header("Question 3 parameters")
+        st.caption("Change one or more values, then click Apply.")
 
-        rate = st.slider(
-            "Request rate  λ (per second)",
-            min_value=0.5,
-            max_value=10.0,
-            value=2.0,
-            step=0.5,
-            key="q3_rate",
-        )
+        with st.form("q3_parameters_form", border=False):
+            rate = st.slider(
+                "Request rate  λ (per second)",
+                min_value=0.5,
+                max_value=10.0,
+                value=2.0,
+                step=0.5,
+                key="q3_rate",
+            )
 
-        seats = st.number_input(
-            "Number of seats",
-            min_value=1,
-            max_value=500,
-            value=60,
-            step=1,
-            key="q3_seats",
-        )
+            seats = st.number_input(
+                "Number of seats",
+                min_value=1,
+                max_value=500,
+                value=60,
+                step=1,
+                key="q3_seats",
+            )
 
-        time_cutoff = st.slider(
-            "Time cutoff  t (seconds)",
-            min_value=0.0,
-            max_value=120.0,
-            value=30.0,
-            step=1.0,
-            key="q3_time_cutoff",
-        )
+            time_cutoff = st.slider(
+                "Time cutoff  t (seconds)",
+                min_value=0.0,
+                max_value=120.0,
+                value=30.0,
+                step=1.0,
+                key="q3_time_cutoff",
+            )
 
-        q3_seed = st.number_input(
-            "Question 3 random seed",
-            min_value=0,
-            value=2029,
-            step=1,
-            key="q3_seed",
-        )
+            q3_seed = st.number_input(
+                "Question 3 random seed",
+                min_value=0,
+                value=2029,
+                step=1,
+                key="q3_seed",
+            )
+
+            st.form_submit_button(
+                "Apply",
+                type="primary",
+                use_container_width=True,
+            )
 
     st.divider()
     st.header("Question 3 — Course registration")
