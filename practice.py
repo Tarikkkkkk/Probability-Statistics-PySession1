@@ -1,4 +1,4 @@
-
+from collections import OrderedDict
 from math import comb, exp, lgamma, log
 import matplotlib.pyplot as plt
 import numpy as np
@@ -54,7 +54,8 @@ def posterior(prevalence, sensitivity, specificity, result="positive"):
 
 
 # Shared simulation helpers
-_sample_cache = {}
+_sample_cache = OrderedDict()
+MAX_CACHE_ENTRIES = 18
 
 
 def clear_sample_cache():
@@ -64,10 +65,20 @@ def clear_sample_cache():
 
 def get_sample(name, settings, seed, build):
     key = (name, tuple(settings), seed)
-    if key not in _sample_cache:
-        _sample_cache[key] = build(np.random.default_rng(seed))
-    return _sample_cache[key]
 
+    if key in _sample_cache:
+        _sample_cache.move_to_end(key)
+
+        return _sample_cache[key]
+
+    value = build(np.random.default_rng(seed))
+    _sample_cache[key] = value
+    _sample_cache.move_to_end(key)
+
+    while len(_sample_cache) > MAX_CACHE_ENTRIES:
+        _sample_cache.popitem(last=False)
+
+    return value
 
 def measure(seq, n, r):
     """Implementation for X and Y"""
@@ -348,7 +359,9 @@ def question1_repeated_tests(population=10000, prevalence=0.01, sensitivity=0.80
 
         from_counts = (tp / (tp + fp) if tp + fp else float("nan"))
 
-        exact = prevalence * a / (prevalence * a + (1 - prevalence) * b)
+        numerator = prevalence * a
+        denominator = prevalence * a + (1 - prevalence) * b
+        exact = (numerator / denominator if denominator > 0 else float("nan"))
 
         rows.append(
             {

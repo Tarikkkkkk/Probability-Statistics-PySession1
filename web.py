@@ -1,4 +1,10 @@
 import streamlit as st
+import matplotlib.pyplot as plt
+
+def show_figure(fig):
+    st.pyplot(fig, clear_figure=False)
+    plt.close(fig)
+
 
 from practice import (
     posterior,
@@ -143,7 +149,7 @@ with tab1:
     result_1 = question1_population_comparison(population=population, prevalence=prevalence, 
                                                sensitivity=sensitivity, specificity=specificity, step=step)
 
-    st.pyplot(result_1["figure"], clear_figure=False)
+    show_figure(result_1["figure"])
 
     st.markdown("#### Numerical results")
 
@@ -181,7 +187,7 @@ with tab2:
     result_2 = question1_parameter_curves(prevalence=prevalence, sensitivity=sensitivity, 
                                           specificity=specificity, step=step)
 
-    st.pyplot(result_2, clear_figure=False)
+    show_figure(result_2)
 
 with tab3:
     st.subheader("Cell 3 — Repeated independent tests")
@@ -196,7 +202,7 @@ with tab3:
     result_3 = question1_repeated_tests(population=population, prevalence=prevalence, 
                                         sensitivity=sensitivity, specificity=specificity)
 
-    st.pyplot(result_3["figure"], clear_figure=False)
+    show_figure(result_3["figure"])
 
     st.markdown("#### Repeated-test probabilities")
 
@@ -275,10 +281,10 @@ with q2_tab1:
                                              target=target, runs=runs, seed=int(seed))
 
     st.markdown("#### Example simulated runs")
-    st.pyplot(result_4["strip_figure"], clear_figure=False)
+    show_figure(result_4["strip_figure"])
 
     st.markdown("#### Simulated distributions and exact PMFs")
-    st.pyplot(result_4["distribution_figure"], clear_figure=False)
+    show_figure(result_4["distribution_figure"])
 
     st.markdown("#### Numerical comparison")
 
@@ -365,7 +371,7 @@ with q2_tab2:
             seed=int(seed),
         )
 
-        st.pyplot(result_5["figure"], clear_figure=False)
+        show_figure(result_5["figure"])
 
         st.markdown("#### Variance comparison")
 
@@ -453,7 +459,7 @@ Each row represents one simulated course opening.
 """
     )
 
-    st.pyplot(result_6["timeline_figure"], clear_figure=False)
+    show_figure(result_6["timeline_figure"])
 
 
 with q3_tab2:
@@ -467,7 +473,7 @@ with q3_tab2:
         """
     )
 
-    st.pyplot(result_6["summary_figure"], clear_figure=False)
+    show_figure(result_6["summary_figure"])
 
 
 with q3_tab3:
