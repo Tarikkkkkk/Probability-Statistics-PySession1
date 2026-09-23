@@ -160,7 +160,7 @@ def question1_population_comparison(population=10000, prevalence=0.01, sensitivi
     grey = "#b0b0b0"
 
     results = {}
-    fig, axes = plt.subplots(2, 2, figsize=(17, 16))
+    fig, axes = plt.subplots(2, 2, figsize=(22, 14))
 
     for ax, changed in zip(axes.flat, [None, "prevalence", "sensitivity", "specificity"]):
         s = dict(base)
@@ -199,17 +199,14 @@ def question1_population_comparison(population=10000, prevalence=0.01, sensitivi
 
         ax.set_title(prefix + title, fontsize=12, loc="left")
 
-        ax.text(0, -N - 1.5,
-            (
-                f"positive results: {tp:,} infected + {fp:,} not "
-                f"= {tp + fp:,}        P(I | +) = {tp / (tp + fp):.3f}"
-            ),
-            fontsize=13, va="top",
-        )
+        ax.text(0, -N - 1.5, (
+            f"positive results: {tp:,} infected + {fp:,} not = {tp + fp:,}\n"
+            f"P(I | +) = {tp / (tp + fp):.3f}"),
+            fontsize=12, va="top")
 
     fig.suptitle(
         f"population {population:,}, one square = {per_square:g}", fontsize=12, color="grey")
-    fig.tight_layout()
+    fig.subplots_adjust(left=0.04, right=0.98, top=0.92, bottom=0.06, wspace=0.38, hspace=0.48)
 
     rows = []
     for label, (s, tp, fn, fp, tn) in results.items():
